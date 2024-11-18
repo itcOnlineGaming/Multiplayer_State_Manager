@@ -1,0 +1,11 @@
+{
+  "name": "ie.mypackage.multiplayerstate",
+  "version": "1.0.0",
+  "displayName": "Multiplayer State Manager",
+  "description": "A reusable package for managing multiplayer game states in Unity.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Jack Nulty",
+    "email": "C00273123@setu.ie"
+  }
+}
