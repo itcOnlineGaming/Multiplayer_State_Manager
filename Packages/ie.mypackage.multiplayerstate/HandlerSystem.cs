@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity;
 using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace NetworkingPackage
+namespace ie.mypackage.multiplayerstate
 {
     /// <summary>
     /// Core system for managing and invoking handlers dynamically.

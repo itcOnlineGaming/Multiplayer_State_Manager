@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine;
 
-namespace NetworkingPackage
+namespace ie.mypackage.multiplayerstate
 {
     /// <summary>
     /// Abstract base class for handling server RPC calls.
