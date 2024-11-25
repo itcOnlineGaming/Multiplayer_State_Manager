@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace ie.mypackage.multiplayerstate
+namespace NetworkPackage
 {
     /// <summary>
     /// Core system for managing and invoking handlers dynamically.
