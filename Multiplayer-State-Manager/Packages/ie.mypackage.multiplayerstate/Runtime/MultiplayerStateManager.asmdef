@@ -1,3 +1,16 @@
 {
-	"name": "MultiplayerStateManager"
+    "name": "MultiplayerStateManager",
+    "rootNamespace": "",
+    "references": [
+        "GUID:28eb33ce19b02a6449c36ecb663a267b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
