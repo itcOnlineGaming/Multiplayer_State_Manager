@@ -6,6 +6,7 @@
   "unity": "2022.3",
   "author": {
     "name": "Jack Nulty",
-    "email": "C00273123@setu.ie"
+    "email": "C00273123@setu.ie",
+    "url" : "https://github.com/itcOnlineGaming/Multiplayer_State_Manager"
   }
 }

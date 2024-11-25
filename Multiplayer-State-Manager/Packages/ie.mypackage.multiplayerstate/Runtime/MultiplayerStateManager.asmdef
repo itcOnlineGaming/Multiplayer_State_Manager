@@ -1,9 +1,7 @@
 {
     "name": "MultiplayerStateManager",
     "rootNamespace": "",
-    "references": [
-        "GUID:28eb33ce19b02a6449c36ecb663a267b"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
