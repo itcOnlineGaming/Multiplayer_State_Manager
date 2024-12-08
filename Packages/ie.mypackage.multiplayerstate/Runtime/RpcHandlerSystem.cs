@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine;
 
-public class RpcHandlerSystem : NetworkBehaviour
+public class RpcHandlerSystem : MonoBehaviour
 {
     // Dictionary to map state types to their handler functions
     private readonly Dictionary<string, Action<string, int, int>> _handlers = new();
