@@ -1,6 +1,6 @@
 {
   "name": "ie.mypackage.multiplayerstate",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "displayName": "Multiplayer State Manager",
   "description": "A reusable package for managing multiplayer game states in Unity.",
   "unity": "2022.3",

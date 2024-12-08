@@ -6,48 +6,53 @@ using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine;
 
-/// <summary>
-/// Core system for managing and invoking handlers dynamically.
-/// </summary>
-public class RpcHandlerSystem
+public class RpcHandlerSystem : NetworkBehaviour
 {
-    // Dictionary to map case types to their respective handler functions
+    // Dictionary to map state types to their handler functions
     private readonly Dictionary<string, Action<string, int, int>> _handlers = new();
 
-    /// <summary>
-    /// Registers a handler for a specific case type.
-    /// </summary>
-    /// <param name="caseType">The case type to handle (e.g., "PlayerMove").</param>
-    /// <param name="handler">The function to execute for this case type.</param>
-    public void RegisterHandler(string caseType, Action<string, int, int> handler)
+    private void Awake()
     {
-        if (!_handlers.ContainsKey(caseType))
+        Debug.Log("DynamicServerRpc initialized. Ready to register handlers.");
+    }
+
+    /// <summary>
+    /// Registers a handler for a specific state type.
+    /// </summary>
+    /// <param name="stateType">The state type to handle (e.g., "PlayerMove").</param>
+    /// <param name="handler">The function to execute for this state type.</param>
+    public void RegisterHandler(string stateType, Action<string, int, int> handler)
+    {
+        if (!_handlers.ContainsKey(stateType))
         {
-            _handlers.Add(caseType, handler);
+            _handlers.Add(stateType, handler);
+            Debug.Log($"Handler for '{stateType}' registered.");
         }
         else
         {
-            Debug.LogWarning($"Handler for '{caseType}' is already registered.");
+            Debug.LogWarning($"Handler for '{stateType}' is already registered.");
         }
     }
 
     /// <summary>
-    /// Executes the handler for a given case type if one exists.
+    /// Server RPC to handle incoming commands dynamically.
     /// </summary>
-    /// <param name="caseType">The case type to handle.</param>
-    /// <param name="value">The string parameter passed to the handler.</param>
-    /// <param name="extraInt">The first integer parameter passed to the handler.</param>
-    /// <param name="outInt">The second integer parameter passed to the handler.</param>
-    public void Handle(string caseType, string value, int extraInt, int outInt)
+    /// <param name="stateType">State type to handle (e.g., "PlayerMove").</param>
+    /// <param name="value">String parameter passed to the handler.</param>
+    /// <param name="extraInt">First integer parameter passed to the handler.</param>
+    [ServerRpc(RequireOwnership = false)]
+    public void SendServerRpc(string stateType, string value, int extraInt)
     {
-        if (_handlers.TryGetValue(caseType, out var handler))
+        int outInt = 0;
+        int.TryParse(value, out outInt);
+
+        if (_handlers.TryGetValue(stateType, out var handler))
         {
-            // Invoke the handler function with the provided parameters
             handler.Invoke(value, extraInt, outInt);
         }
         else
         {
-            Debug.LogWarning($"No handler found for '{caseType}'.");
+            Debug.LogWarning($"No handler found for state type '{stateType}'.");
         }
     }
 }
