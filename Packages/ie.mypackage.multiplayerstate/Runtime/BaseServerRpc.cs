@@ -9,12 +9,12 @@ using Unity.Netcode;
 public class BaseServerRpc : NetworkBehaviour
 {
     // Instance of the handler system
-    protected RpcHandlerSystem _rpcHandlerSystem;
+    public RpcHandlerSystem _rpcHandlerSystem;
 
     /// <summary>
     /// Initializes the RpcHandlerSystem.
     /// </summary>
-    protected virtual void Awake()
+    public virtual void Awake()
     {
         _rpcHandlerSystem = new RpcHandlerSystem();
     }
