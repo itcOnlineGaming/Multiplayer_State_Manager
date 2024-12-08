@@ -1,39 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Unity;
+using UnityEngine.UI;
 using Unity.Netcode;
+using UnityEngine;
 
 /// <summary>
-/// Abstract base class for handling server RPC calls.
+/// Core system for managing and invoking handlers dynamically.
 /// </summary>
-public class BaseServerRpc : NetworkBehaviour
+public class RpcHandlerSystem
 {
-    // Instance of the handler system
-    protected RpcHandlerSystem _rpcHandlerSystem;
+    // Dictionary to map case types to their respective handler functions
+    private readonly Dictionary<string, Action<string, int, int>> _handlers = new();
 
     /// <summary>
-    /// Initializes the RpcHandlerSystem.
+    /// Registers a handler for a specific case type.
     /// </summary>
-    protected virtual void Awake()
+    /// <param name="caseType">The case type to handle (e.g., "PlayerMove").</param>
+    /// <param name="handler">The function to execute for this case type.</param>
+    public void RegisterHandler(string caseType, Action<string, int, int> handler)
     {
-        _rpcHandlerSystem = new RpcHandlerSystem();
+        if (!_handlers.ContainsKey(caseType))
+        {
+            _handlers.Add(caseType, handler);
+        }
+        else
+        {
+            Debug.LogWarning($"Handler for '{caseType}' is already registered.");
+        }
     }
 
     /// <summary>
-    /// Server RPC method to handle incoming commands.
+    /// Executes the handler for a given case type if one exists.
     /// </summary>
-    /// <param name="valueType">The type of command (case type).</param>
-    /// <param name="value">String parameter for the command.</param>
-    /// <param name="extraInt">First integer parameter for the command.</param>
-    [ServerRpc(RequireOwnership = false)]
-    public void SendServerRpc(string valueType, string value, int extraInt)
+    /// <param name="caseType">The case type to handle.</param>
+    /// <param name="value">The string parameter passed to the handler.</param>
+    /// <param name="extraInt">The first integer parameter passed to the handler.</param>
+    /// <param name="outInt">The second integer parameter passed to the handler.</param>
+    public void Handle(string caseType, string value, int extraInt, int outInt)
     {
-        int outInt = 0;
-
-        // Attempt to parse the string value into an integer
-        int.TryParse(value, out outInt);
-
-        // Delegate handling to the RpcHandlerSystem
-        _rpcHandlerSystem.Handle(valueType, value, extraInt, outInt);
+        if (_handlers.TryGetValue(caseType, out var handler))
+        {
+            // Invoke the handler function with the provided parameters
+            handler.Invoke(value, extraInt, outInt);
+        }
+        else
+        {
+            Debug.LogWarning($"No handler found for '{caseType}'.");
+        }
     }
 }
